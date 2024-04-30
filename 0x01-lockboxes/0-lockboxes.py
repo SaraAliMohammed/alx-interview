@@ -15,6 +15,8 @@ def canUnlockAll(boxes):
     for box in boxes:
         if type(box) is not list:
             return False
+    if len(boxes[0]) == 0:
+        return (False)
     keys = {0}
     size = len(boxes)
     visited = {0}
