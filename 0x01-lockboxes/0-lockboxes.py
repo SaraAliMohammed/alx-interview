@@ -33,7 +33,7 @@ def canUnlockAll(boxes):
             if -1 in copyBoxes[new_key] or new_key in keys_list:
                 continue
             keys_list.append(new_key)
-        for box in copyBoxes:
-            if -1 not in box:
-                return False
-        return True
+    for box in copyBoxes:
+        if -1 not in box:
+            return False
+    return True
