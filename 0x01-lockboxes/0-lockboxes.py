@@ -10,22 +10,30 @@ def canUnlockAll(boxes):
 
         Returns: True if all boxes can be opened, else return False
     '''
+    from copy import deepcopy
+
     if type(boxes) is not list or len(boxes) < 1:
         return False
     for box in boxes:
         if type(box) is not list:
             return False
-    if len(boxes[0]) == 0:
-        return (False)
-    keys = {0}
-    size = len(boxes)
-    visited = {0}
-    keys = keys.union(boxes[0])
-    while size > 0:
-        for i in keys:
-            if i in visited:
+    copyBoxes = deepcopy(boxes)
+    keys_list = [0]
+    while len(keys_list) > 0:
+        key = keys_list[0]
+        keys_list = keys_list[1:]
+        if type(key) is not int or key < 0:
+            return False
+        copyBoxes[key].append(-1)
+        for new_key in copyBoxes[key]:
+            if new_key is -1:
                 continue
-            keys = keys.union(boxes[i])
-            visited.add(i)
-        size -= 1
-    return len(keys) == len(boxes)
+            if new_key >= len(copyBoxes):
+                continue
+            if -1 in copyBoxes[new_key] or new_key in keys_list:
+                continue
+            keys_list.append(new_key)
+        for box in copyBoxes:
+            if -1 not in box:
+                return False
+        return True
